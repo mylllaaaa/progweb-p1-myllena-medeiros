@@ -7,7 +7,7 @@ class Conta {
         this.#saldo = saldo;
     }
 
-    getNome() {
+    getTitular() {
         return this.#titular;
     }
 
@@ -15,7 +15,7 @@ class Conta {
         return this.#saldo;
     } 
     
-    setNome(titular: string) {
+    setTitular(titular: string) {
         this.#titular = titular;
     }
 
@@ -24,7 +24,7 @@ class Conta {
     }
 
     saldo() {
-        console.log("Olá Sr./Sra. " + this.#titular + ", seu saldo é: " + this.#saldo);
+        console.log("Olá Sr./Sra. " + this.getTitular() + ", seu saldo é: " + this.getSaldo());
     }
 
 }
