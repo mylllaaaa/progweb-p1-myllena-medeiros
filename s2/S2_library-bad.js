@@ -1,3 +1,5 @@
+// DUPLA: André Vinícius Barros Macambira e Myllena de Sousa Medeiros Um e Nome Dois
+
 // ============================================================
 // S2_library-bad.js — Mãos à Obra da Semana 2 (Parte A)
 // Este código FUNCIONA (rode: node S2_library-bad.js). E é ruim de propósito.
@@ -6,15 +8,19 @@
 //   Use // VIOLA: <S|O|L|I|D>   para cada princípio SOLID violado (slide 4)
 // ============================================================
 
-class Library {
+
+class Library { // SMELL: <God Class> (Deveria ser uma classe separada da main)
   constructor() {
-    this.bks = [];
+    this.bks = []; 
     this.us = [];
-    this.lns = [];
+    this.lns = []; // SMELL: <Nome obscuro> (Até agora eu não sei o que lns quer dizer)
   }
 
-  doStuff(book, userId, action) {
-    if (action === 'add') {
+
+  // VIOLA: <S> (Essa função faz coisa demais e viola o single responsability).
+  // VIOLA: <O> (Essa função não da para expandir pq ninguém consegue entender, e precisa ser modificada urgentemente)
+  doStuff(book, userId, action) { // SMELL: <Nome obscuro | Long Function> (Deveria dizer o que essa funcão faz, fazer somente uma ação)
+    if (action === 'add') { // SMELL: <Switch sobre tipo> (Deveria ter uma função para cada ação no lugar desse Switch)
       this.bks.push(book);
       console.log('Added: ' + book.t);
     } else if (action === 'lend') {
@@ -29,11 +35,11 @@ class Library {
       if (u != null && b != null && b.cp > 0) {
         b.cp = b.cp - 1;
         this.lns.push({ uid: userId, bt: book.t, d: new Date(), st: 1 });
-        // 1 = active, 2 = returned, 3 = overdue
+        // 1 = active, 2 = returned, 3 = overdue // SMELL: <Comentário-desodorante> (Esse comentário não serve pra muita coisa, não precisava dele)
         fetch('http://email.api/send', {
           method: 'POST',
           body: JSON.stringify({ to: u.em, msg: 'Você pegou ' + book.t })
-        }).then(r => { /* nada */ }).catch(e => {});
+        }).then(r => { /* nada */ }).catch(e => {}); // SMELL: <Erro engolido> (Esse catch não pega nada e nem faz nada)
       }
     } else if (action === 'return') {
       for (var k = 0; k < this.lns.length; k++) {
@@ -65,7 +71,7 @@ class Library {
   }
 
   registerUser(n, e, ph, addr, cty, st, zp, isAdm) {
-    this.us.push({ id: this.us.length + 1, n: n, em: e, ph: ph, addr: addr, cty: cty, st: st, zp: zp, isAdm: isAdm });
+    this.us.push({ id: this.us.length + 1, n: n, em: e, ph: ph, addr: addr, cty: cty, st: st, zp: zp, isAdm: isAdm });// SMELL: <Data Clumps> (Tudo isso poderia ser uma classe)
   }
 
   report(type) {
