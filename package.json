@@ -1,0 +1,13 @@
+{
+  "name": "livros-playlists-api",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node backend/src/server.js",
+    "dev": "node --watch backend/src/server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
